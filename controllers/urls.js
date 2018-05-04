@@ -1,6 +1,6 @@
 const Url = require('../models/url');
 
-function indexUrl(req, res, next) { 
+function indexUrl(req, res) { 
   res.render('index');
 }
 
