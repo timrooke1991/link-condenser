@@ -1,0 +1,21 @@
+{
+  "name": "tiny_url",
+  "version": "1.0.0",
+  "description": "clone of tiny url",
+  "main": "index.js",
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "body-parser": "^1.18.2",
+    "ejs": "^2.5.9",
+    "express": "^4.16.3",
+    "express-ejs-layouts": "^2.4.0",
+    "mongoose": "^5.0.17",
+    "morgan": "^1.9.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tim Rooke",
+  "license": "MIT"
+}
