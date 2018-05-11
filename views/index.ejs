@@ -19,3 +19,12 @@
         <button class="btn">Shorten Link</button>
     </div>
 </form>
+
+<% if(url) { %>
+    <div>
+        <p>Your link to <%= url.url %></p>
+        <a href="<%= 'http://' + url.host + '/r/' + url.alias %>" target="_blank">
+            <%= 'http://' + url.host + '/r/' + url.alias %>
+        </a>
+    </div>
+<% } %>

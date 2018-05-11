@@ -2,18 +2,20 @@ const Url       = require('../models/url');
 const randStr   = require('randomstring');
 
 function indexUrl(req, res) { 
-  res.render('index');
+  const url = false;
+  res.render('index', { url });
 }
 
 function createUrl(req, res, next) {
 
   if (!req.body.alias) req.body.alias = randStr.generate(6);
-
+  // check with http:// present
+  // duplicate alias  
   Url
     .create(req.body)
     .then((url) => {
-      console.log(url);
-      res.redirect('/');
+      url.host = req.headers.host;
+      res.render('index', { url });
     })
     .catch((err) => {
       if(err.name === 'ValidationError') return res.badRequest(`/`, err.toString());
@@ -22,8 +24,6 @@ function createUrl(req, res, next) {
 }
 
 function showUrl(req, res, next) {
-
-  console.log(req.params);
   
   Url
     .findOne({ alias: req.params.alias })
@@ -33,7 +33,6 @@ function showUrl(req, res, next) {
       res.redirect(url.url);
     })
     .catch((err) => {
-      if (err.name === 'ValidationError') return res.badRequest(`/`, err.toString());
       next(err);
     });
 }
