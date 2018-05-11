@@ -27,5 +27,3 @@ app.use(errorHandler);
 // app.get('/*', (req, res) => res.sendFile(`${__dirname}/views/index`));
 
 app.listen(port, () => console.log(`Express has started on port: ${port}`));
-
-module.exports = app;

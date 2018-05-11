@@ -21,6 +21,9 @@
 </form>
 
 <!-- This to be a box that fades in on link submission: Same box to be used for errors, validation and link details -->
+
+<!-- Probably simpler, easier and cleaner to do with AJAX - no page refresh -->
+<!-- Worth looking at a React frontend -->
 <% if(url) { %>
     <div>
         <p>Your link to <%= url.url %></p>
