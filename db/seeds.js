@@ -7,3 +7,5 @@ mongoose.connect(dbURI);
 const Url = require('../models/url');
 
 Url.collection.drop();
+
+

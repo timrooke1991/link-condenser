@@ -14,7 +14,7 @@ function createUrl(req, res, next) {
   Url
     .create(req.body)
     .then((url) => {
-      url.host = req.headers.host;
+      url.host = req.headers.origin;
       res.render('index', { url });
     })
     .catch((err) => {
@@ -24,12 +24,16 @@ function createUrl(req, res, next) {
 }
 
 function showUrl(req, res, next) {
-  
+  console.log('showUrl function run');
   Url
     .findOne({ alias: req.params.alias })
     .exec()
     .then((url) => {
       console.log(url);
+      // Move to middleware or model
+      if(!/^(f|ht)htps?:\/\//i.test(url.url)) {
+        url.url = `http://${url.url}`;
+      }
       res.redirect(url.url);
     })
     .catch((err) => {
