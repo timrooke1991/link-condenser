@@ -9,8 +9,7 @@ function indexUrl(req, res) {
 function createUrl(req, res, next) {
 
   if (!req.body.alias) req.body.alias = randStr.generate(6);
-  // check with http:// present
-  // duplicate alias  
+
   Url
     .create(req.body)
     .then((url) => {
