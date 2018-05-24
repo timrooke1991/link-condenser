@@ -14,7 +14,7 @@ function createUrl(req, res, next) {
     .create(req.body)
     .then((url) => {
       url.host = req.headers.origin;
-      res.render('index', { url });
+      res.status(201).json(url);
     })
     .catch((err) => {
       if(err.name === 'ValidationError') return res.badRequest(`/`, err.toString());
@@ -28,7 +28,6 @@ function showUrl(req, res, next) {
     .findOne({ alias: req.params.alias })
     .exec()
     .then((url) => {
-      console.log(url);
       // Move to middleware or model
       if(!/^(f|ht)htps?:\/\//i.test(url.url)) {
         url.url = `http://${url.url}`;

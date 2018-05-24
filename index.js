@@ -1,8 +1,9 @@
 const express         = require('express');
 const app             = express();
-const expressLayouts  = require('express-ejs-layouts');
 const bodyParser      = require('body-parser');
 const mongoose        = require('mongoose');
+
+mongoose.plugin(require('./lib/globalToJSON'));
 mongoose.Promise      = require('bluebird');
 
 
@@ -13,11 +14,7 @@ const errorHandler      = require('./lib/errorHandler');
 const { dbURI, port } = require('./config/environment');
 mongoose.connect(dbURI);
 
-app.set('view engine', 'ejs');
-app.set('views', `${__dirname}/views`);
-app.use(expressLayouts);
-app.use(express.static(`${__dirname}/src`));
-
+app.use(bodyParser.json({ limit: '5mb' }));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(customResponses);
