@@ -6,7 +6,6 @@ const mongoose        = require('mongoose');
 mongoose.plugin(require('./lib/globalToJSON'));
 mongoose.Promise      = require('bluebird');
 
-
 const routes            = require('./config/routes');
 const customResponses   = require('./lib/customResponses');
 const errorHandler      = require('./lib/errorHandler');
@@ -20,7 +19,5 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(customResponses);
 app.use(routes);
 app.use(errorHandler);
-
-// app.get('/*', (req, res) => res.sendFile(`${__dirname}/views/index`));
 
 app.listen(port, () => console.log(`Express has started on port: ${port}`));

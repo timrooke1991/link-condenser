@@ -2,8 +2,7 @@ const Url       = require('../models/url');
 const randStr   = require('randomstring');
 
 function indexUrl(req, res) { 
-  const url = false;
-  res.render('index', { url });
+  res.status(200).json();
 }
 
 function createUrl(req, res, next) {
@@ -17,21 +16,26 @@ function createUrl(req, res, next) {
       res.status(201).json(url);
     })
     .catch((err) => {
-      if(err.name === 'ValidationError') return res.badRequest(`/`, err.toString());
+      if(err.name === 'ValidationError') return res.badRequest();
       next(err);
     });
 }
 
 function showUrl(req, res, next) {
   console.log('showUrl function run');
+  
   Url
     .findOne({ alias: req.params.alias })
     .exec()
     .then((url) => {
+
       // Move to middleware or model
-      if(!/^(f|ht)htps?:\/\//i.test(url.url)) {
+      const httpCheck = new RegExp('^(http|https)://', 'i');
+      
+      if (!httpCheck.test(url.url)) {
         url.url = `http://${url.url}`;
       }
+
       res.redirect(url.url);
     })
     .catch((err) => {
