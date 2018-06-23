@@ -17,7 +17,7 @@ app.use(bodyParser.json({ limit: '5mb' }));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(customResponses);
-app.use(routes);
+app.use('/api', routes);
 app.use(errorHandler);
 
 app.listen(port, () => console.log(`Express has started on port: ${port}`));

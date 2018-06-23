@@ -1,4 +1,0 @@
-$(() => {
-  console.log('JS Loaded');
-  
-});
