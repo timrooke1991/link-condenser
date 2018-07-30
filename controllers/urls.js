@@ -1,14 +1,11 @@
 const Url       = require('../models/url');
-const randStr   = require('randomstring');
 
 function indexUrl(req, res) { 
   res.status(200).json();
 }
 
 function createUrl(req, res, next) {
-
-  if (!req.body.alias) req.body.alias = randStr.generate(6);
-
+  
   Url
     .create(req.body)
     .then((url) => {
