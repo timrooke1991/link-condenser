@@ -5,17 +5,14 @@ function indexUrl(req, res) {
 }
 
 function createUrl(req, res, next) {
-
+  console.log(req.body);
   Url
     .create(req.body)
     .then((url) => {
       url.host = req.headers.origin;
       res.status(201).json(url);
     })
-    .catch((err) => {
-      if(err.name === 'ValidationError') return res.badRequest();
-      next(err);
-    });
+    .catch(next);
 }
 
 function showUrl(req, res, next) {

@@ -11,7 +11,7 @@ class App extends React.Component {
     this.state = {
       data: {
         url: '',
-        codeProvided: ''
+        alias: ''
       },
       errors: '',
       codeCreated: ''
@@ -24,41 +24,55 @@ class App extends React.Component {
   handleCreate(e) {
     e.preventDefault();
 
-    axios.post('/api/', this.state)
-      .then((data) => {
+    axios.post('/api/', this.state.data)
+      .then((url) => {
         this.setState({
-          url: '',
-          codeProvided: ''
+          data: {
+            url: '',
+            alias: ''
+          },
+          errors: '',
+          codeCreated: url.data.alias
         });
       })
-      .catch(err => console.log(err));
+      .catch((err) => {
+        console.log(err)
+        this.setState({ errors: err.response.data.errors })
+      });
 
   }
 
   handleChange(e) {
-
-    const values = Object.assign({}, this.state, { [name]: value });
+    const { name, value } = e.target;
+    const values = Object.assign({}, this.state.data, { [name]: value });
     const errors = Object.assign({}, this.state.errors, { [name]: '' });
+
     this.setState({ data: values, errors });
   }
 
   render() {
+    const { errors } = this.state;
 
     return (
       <div className="login">
+        <p>{JSON.stringify(this.state)}</p>
         <h1>Create me a link</h1>
         <form onSubmit={this.handleCreate} noValidate>
-          <input type="text" name="link" placeholder="bbc.co.uk" onChange={this.handleChange}
+          {errors.url && <small>{errors.url}</small>}
+          <input type="text" name="url" placeholder="bbc.co.uk" onChange={this.handleChange}
             value={this.state.data.name} />
+          {errors.alias && <small>{errors.alias}</small>}
           <input
             type="text"
-            name="code"
+            name="alias"
             placeholder="thebeeb (optional)"
             onChange= {this.handleChange}
             value={this.state.data.code}
           />
           <button className="btn btn-primary btn-block btn-large">Submit</button>
         </form>
+
+        <span>{this.state.codeCreated}</span>
       </div>
     );
   }
