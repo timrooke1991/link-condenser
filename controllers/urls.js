@@ -22,8 +22,6 @@ function showUrl(req, res, next) {
     .findOne({ alias: req.params.alias })
     .exec()
     .then((url) => {
-
-      // Move to middleware or model
       const httpCheck = new RegExp('^(http|https)://', 'i');
 
       if (!httpCheck.test(url.url)) {

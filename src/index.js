@@ -58,10 +58,10 @@ class App extends React.Component {
         <p>{JSON.stringify(this.state)}</p>
         <h1>Create me a link</h1>
         <form onSubmit={this.handleCreate} noValidate>
-          {errors.url && <small>{errors.url}</small>}
+          {errors && <small>{errors}</small>}
           <input type="text" name="url" placeholder="bbc.co.uk" onChange={this.handleChange}
             value={this.state.data.name} />
-          {errors.alias && <small>{errors.alias}</small>}
+          {errors && <small>{errors}</small>}
           <input
             type="text"
             name="alias"
