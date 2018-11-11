@@ -1,20 +1,17 @@
 const mongoose = require('mongoose');
 
 const urlSchema = new mongoose.Schema({
-  url: { type: String, required: true },
+  url: { type: String, required: [true, 'Provide a url to get your link'] },
   alias: { type: String, unique: true }
 }, {
   timestamps: true
 });
 
-// incorporate this into post-save hook
-// Trim last 
-
 urlSchema.pre('save', function createHash(next) {
 
   if(this.alias)
     return next();
-     
+
   const itemId = this._id.toString();
   const s = itemId.substr(itemId.length - 6);
   var a = 1, c = 0, h, o;

@@ -1,4 +1,4 @@
-const Url       = require('../models/url');
+const Url = require('../models/url');
 
 function indexUrl(req, res) {
   res.status(200).json();

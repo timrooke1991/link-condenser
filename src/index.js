@@ -36,7 +36,7 @@ class App extends React.Component {
         });
       })
       .catch((err) => {
-        console.log(err)
+        console.log(err.response);
         this.setState({ errors: err.response.data.errors })
       });
 
@@ -46,7 +46,6 @@ class App extends React.Component {
     const { name, value } = e.target;
     const values = Object.assign({}, this.state.data, { [name]: value });
     const errors = Object.assign({}, this.state.errors, { [name]: '' });
-
     this.setState({ data: values, errors });
   }
 
@@ -58,16 +57,15 @@ class App extends React.Component {
         <p>{JSON.stringify(this.state)}</p>
         <h1>Create me a link</h1>
         <form onSubmit={this.handleCreate} noValidate>
-          {errors && <small>{errors}</small>}
+          {errors.url && <small>{errors.url}</small>}
           <input type="text" name="url" placeholder="bbc.co.uk" onChange={this.handleChange}
-            value={this.state.data.name} />
-          {errors && <small>{errors}</small>}
+            value={this.state.data.url} />
           <input
             type="text"
             name="alias"
             placeholder="thebeeb (optional)"
             onChange= {this.handleChange}
-            value={this.state.data.code}
+            value={this.state.data.alias}
           />
           <button className="btn btn-primary btn-block btn-large">Submit</button>
         </form>
