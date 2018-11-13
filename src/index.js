@@ -23,6 +23,9 @@ class App extends React.Component {
 
   handleCreate(e) {
     e.preventDefault();
+    if(!this.isValidURL(this.state.data.url)) {
+      return false;
+    }
 
     axios.post('/api/', this.state.data)
       .then((url) => {
@@ -31,7 +34,10 @@ class App extends React.Component {
             url: '',
             alias: ''
           },
-          errors: '',
+          errors: {
+            url: '',
+            alias: ''
+          },
           codeCreated: url.data.alias
         });
       })
@@ -47,6 +53,23 @@ class App extends React.Component {
     const values = Object.assign({}, this.state.data, { [name]: value });
     const errors = Object.assign({}, this.state.errors, { [name]: '' });
     this.setState({ data: values, errors });
+  }
+
+  isValidURL(str) {
+    var pattern = new RegExp('^(https?:\/\/)?' + // protocol
+      '((([a-z\d]([a-z\d-]*[a-z\d])*)\.)+[a-z]{2,}|' + // domain name
+      '((\d{1,3}\.){3}\d{1,3}))' + // OR ip (v4) address
+      '(\:\d+)?(\/[-a-z\d%_.~+]*)*' + // port and path
+      '(\?[;&a-z\d%_.~+=-]*)?' + // query string
+      '(\#[-a-z\d_]*)?$', 'i'); // fragment locater
+    if (!pattern.test(str)) {
+      this.setState({
+        errors: { url: 'Please enter valid url' }
+      })
+      return false;
+    } else {
+      return true;
+    }
   }
 
   render() {
