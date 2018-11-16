@@ -8,7 +8,7 @@ const HtmlWebpack = new HtmlWebpackPlugin({
   inject: 'body'
 });
 
-const HotModuleReplcement = new webpack.HotModuleReplacementPlugin();
+const HotModuleReplacement = new webpack.HotModuleReplacementPlugin();
 
 module.exports = {
   entry: './src/index.js',
@@ -39,5 +39,5 @@ module.exports = {
       }
     }
   },
-  plugins: [HotModuleReplcement, HtmlWebpack]
+  plugins: [HotModuleReplacement, HtmlWebpack]
 };
