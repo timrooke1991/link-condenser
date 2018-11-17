@@ -1,43 +1,46 @@
 const path = require('path');
-const webpack = require('webpack');
-
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const HtmlWebpack = new HtmlWebpackPlugin({
-  template: 'src/index.html',
-  filename: 'index.html',
-  inject: 'body'
-});
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
-const HotModuleReplacement = new webpack.HotModuleReplacementPlugin();
+const outputDirectory = 'dist';
 
 module.exports = {
-  entry: './src/index.js',
+  mode: 'development',
+  entry: ['@babel/polyfill', './src/index.js'],
   output: {
-    path: path.resolve('public'),
-    filename: 'index.js'
+    path: path.join(__dirname, outputDirectory),
+    filename: 'bundle.js'
   },
   module: {
-    loaders: [
-      { test: /\.jsx?$/, loader: 'babel-loader', exclude: /node_modules/ },
-      { test: /\.css$/, loader: ['style-loader', 'css-loader'] },
-      { test: /\.scss$/, loader: ['style-loader', 'css-loader', 'sass-loader'], exclude: /node_modules/ },
-      { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file-loader' },
-      { test: /\.(woff|woff2)$/, loader: 'url-loader?prefix=font/&limit=5000' },
-      { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url-loader?limit=10000&mimetype=application/octet-stream' },
-      { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url-loader?limit=10000&mimetype=image/svg+xml' }
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader'
+        }
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
+      },
+      {
+        test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+        loader: 'url-loader?limit=100000'
+      }
     ]
   },
   devServer: {
-    historyApiFallback: true,
-    hot: true,
-    inline: true,
     port: 8000,
+    open: true,
     proxy: {
-      '/api': {
-        target: 'http://localhost:3030',
-        secure: false
-      }
+      '/api': 'http://localhost:3030'
     }
   },
-  plugins: [HotModuleReplacement, HtmlWebpack]
+  plugins: [
+    new CleanWebpackPlugin([outputDirectory]),
+    new HtmlWebpackPlugin({
+      template: './src/index.html'
+    })
+  ]
 };
