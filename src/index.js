@@ -2,8 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 
-import './style/style.css';
-
 class App extends React.Component {
   constructor() {
     super();
@@ -43,7 +41,7 @@ class App extends React.Component {
       })
       .catch((err) => {
         console.log(err.response);
-        this.setState({ errors: err.response.data.errors })
+        this.setState({ errors: err.response.data.errors });
       });
 
   }
@@ -56,16 +54,12 @@ class App extends React.Component {
   }
 
   isValidURL(str) {
-    var pattern = new RegExp('^(https?:\/\/)?' + // protocol
-      '((([a-z\d]([a-z\d-]*[a-z\d])*)\.)+[a-z]{2,}|' + // domain name
-      '((\d{1,3}\.){3}\d{1,3}))' + // OR ip (v4) address
-      '(\:\d+)?(\/[-a-z\d%_.~+]*)*' + // port and path
-      '(\?[;&a-z\d%_.~+=-]*)?' + // query string
-      '(\#[-a-z\d_]*)?$', 'i'); // fragment locater
+    // Add proper Regex
+    const pattern = new RegExp('(test)');
     if (!pattern.test(str)) {
       this.setState({
         errors: { url: 'Please enter valid url' }
-      })
+      });
       return false;
     } else {
       return true;
