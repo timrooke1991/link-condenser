@@ -1,18 +1,18 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import axios from 'axios';
+import React, { Component } from "react";
+import ReactDOM from "react-dom";
+import axios from "axios";
 
-class App extends React.Component {
+class App extends Component {
   constructor() {
     super();
 
     this.state = {
       data: {
-        url: '',
-        alias: ''
+        url: "",
+        alias: ""
       },
-      errors: '',
-      codeCreated: ''
+      errors: "",
+      codeCreated: ""
     };
 
     this.handleCreate = this.handleCreate.bind(this);
@@ -21,44 +21,44 @@ class App extends React.Component {
 
   handleCreate(e) {
     e.preventDefault();
-    if(!this.isValidURL(this.state.data.url)) {
+    if (!this.isValidURL(this.state.data.url)) {
       return false;
     }
 
-    axios.post('/api/', this.state.data)
-      .then((url) => {
+    axios
+      .post("/api/", this.state.data)
+      .then(url => {
         this.setState({
           data: {
-            url: '',
-            alias: ''
+            url: "",
+            alias: ""
           },
           errors: {
-            url: '',
-            alias: ''
+            url: "",
+            alias: ""
           },
           codeCreated: url.data.alias
         });
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err.response);
         this.setState({ errors: err.response.data.errors });
       });
-
   }
 
   handleChange(e) {
     const { name, value } = e.target;
     const values = Object.assign({}, this.state.data, { [name]: value });
-    const errors = Object.assign({}, this.state.errors, { [name]: '' });
+    const errors = Object.assign({}, this.state.errors, { [name]: "" });
     this.setState({ data: values, errors });
   }
 
   isValidURL(str) {
     // Add proper Regex
-    const pattern = new RegExp('(test)');
+    const pattern = new RegExp("(test)");
     if (!pattern.test(str)) {
       this.setState({
-        errors: { url: 'Please enter valid url' }
+        errors: { url: "Please enter valid url" }
       });
       return false;
     } else {
@@ -70,22 +70,28 @@ class App extends React.Component {
     const { errors } = this.state;
 
     return (
-
       <div className="login">
         <p>{JSON.stringify(this.state)}</p>
         <h1>Create me a link</h1>
         <form onSubmit={this.handleCreate} noValidate>
           {errors.url && <small>{errors.url}</small>}
-          <input type="text" name="url" placeholder="bbc.co.uk" onChange={this.handleChange}
-            value={this.state.data.url} />
+          <input
+            type="text"
+            name="url"
+            placeholder="bbc.co.uk"
+            onChange={this.handleChange}
+            value={this.state.data.url}
+          />
           <input
             type="text"
             name="alias"
             placeholder="thebeeb (optional)"
-            onChange= {this.handleChange}
+            onChange={this.handleChange}
             value={this.state.data.alias}
           />
-          <button className="btn btn-primary btn-block btn-large">Submit</button>
+          <button className="btn btn-primary btn-block btn-large">
+            Submit
+          </button>
         </form>
 
         <span>{this.state.codeCreated}</span>
@@ -94,8 +100,4 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('root')
-);
-
+ReactDOM.render(<App />, document.getElementById("root"));
