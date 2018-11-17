@@ -1,5 +1,5 @@
 {
-  "name": "tim-rooke-to-do-app",
+  "name": "tiny-url-clone",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -48,9 +48,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://timrooke1991@bitbucket.org/axis-workshops/tim-rooke-to-do-app.git"
+    "url": "git+https://github.com/timrooke1991/link-condenser.git"
   },
   "author": "Tim Rooke",
   "license": "MIT",
-  "homepage": "https://bitbucket.org/axis-workshops/tim-rooke-to-do-app#readme"
+  "homepage": "https://github.com/timrooke1991/link-condenser#readme"
 }
