@@ -76,6 +76,7 @@ class App extends React.Component {
     const { errors } = this.state;
 
     return (
+
       <div className="login">
         <p>{JSON.stringify(this.state)}</p>
         <h1>Create me a link</h1>
@@ -103,3 +104,4 @@ ReactDOM.render(
   <App />,
   document.getElementById('root')
 );
+
